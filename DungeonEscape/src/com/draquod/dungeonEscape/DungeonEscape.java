@@ -24,6 +24,16 @@ public class DungeonEscape implements ApplicationListener {
 		
 		stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+        
+        //World world = new World();
+        //world.Debug_PrintWorld();
+        Debug_DungeonDrawer ddd = new Debug_DungeonDrawer();
+        stage.addActor(ddd);
+        System.out.println("Begining dungeon creation");
+        DungeonGenerator dg = new DungeonGenerator();
+        dg.CreateDungeon();
+        System.out.println("Dungeon created :)");
+        ddd.dg = dg;
 		
 	}
 
@@ -34,7 +44,7 @@ public class DungeonEscape implements ApplicationListener {
 
 	@Override
 	public void render() {		
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		 stage.act(Gdx.graphics.getDeltaTime());
