@@ -83,7 +83,11 @@ public class DungeonGenerator {
 	}
 
 	public void CreateDungeon() {
-		
+		xs.clear();
+		ys.clear();
+		xe.clear();
+		ye.clear();
+		room_id = 1;
 		cells = new int[n_cols][n_rows];
 		for (int i = 0; i < n_cols; i++) {
 			for (int j = 0; j < n_rows; j++) {
@@ -148,7 +152,7 @@ public class DungeonGenerator {
 				if(((cells[ci][cj] & (~ROOM_ID)) != ROOM) 
 						&&  (cells[ci][cj] != PERIMETER) 
 						&& (cells[ci][cj] != CORRIDOR)){
-					if(ci > 1 && cj > 1 && ci < n_cols-2 && cj < n_rows -2){
+					if(ci > 2 && cj > 2 && ci < n_cols-2 && cj < n_rows -2){
 						if(cells[ci+2][cj] == CORRIDOR ||
 							cells[ci-2][cj] == CORRIDOR ||
 							cells[ci][cj+2] == CORRIDOR ||

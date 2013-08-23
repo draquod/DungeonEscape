@@ -49,11 +49,12 @@ public class DungeonEscape implements ApplicationListener {
         player.x = dg.begin.x*dg.cell_size*10 + dg.cell_size*10/2;
         player.y = dg.begin.y*dg.cell_size*10 + dg.cell_size*10/2;
         cam = new OrthographicCamera(100, 100);
-        //cam.zoom = 0.6f;
-        cam.zoom = 3.5f;
+        if(!Data.DEBUG)  cam.zoom = 0.6f;
+        if(Data.DEBUG)  cam.zoom = 3.5f;
 		stage.setCamera(cam);
+		player.dg = dg;
 		
-		//cam.position.set(dg.cell_size*10*dg.n_cols/2,dg.cell_size*10*dg.n_rows/2,0);
+		if(Data.DEBUG)  cam.zoom = 3.5f;cam.position.set(dg.cell_size*10*dg.n_cols/2,dg.cell_size*10*dg.n_rows/2,0);
 		//cam.update();
 	}
 
@@ -74,8 +75,8 @@ public class DungeonEscape implements ApplicationListener {
 	        player.y = dg.begin.y*dg.cell_size*10 + dg.cell_size*10/2;
 			
 		}
-		cam.position.set(dg.cell_size*10*dg.n_cols/2,dg.cell_size*10*dg.n_rows/2,0);
-		//cam.position.set(player.x,player.y,0);
+		if(Data.DEBUG) cam.position.set(dg.cell_size*10*dg.n_cols/2,dg.cell_size*10*dg.n_rows/2,0);
+		if(!Data.DEBUG) cam.position.set(player.x,player.y,0);
 		stage.act(Gdx.graphics.getDeltaTime());
 		
 		stage.draw();

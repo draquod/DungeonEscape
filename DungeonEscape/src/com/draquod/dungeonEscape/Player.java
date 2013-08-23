@@ -12,6 +12,7 @@ public class Player extends Entity{
 	public float y;
 	public float speed = 230.0f;
 	private ShapeRenderer sr;
+	public DungeonGenerator dg;
 	
 	public Player(){
 		sr = new ShapeRenderer();
@@ -19,18 +20,29 @@ public class Player extends Entity{
 	
 	@Override
 	public void act(float dt){
+		float newX = x;
+		float newY = y;
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
-			x -= dt*speed;
+			newX -= dt*speed;
 		}
 		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
-			x += dt*speed;
+			newX += dt*speed;
 		}
 		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
-			y += dt*speed;
+			newY += dt*speed;
 		}
 		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) {
-			y -= dt*speed;
+			newY -= dt*speed;
 		}
+		
+		if(dg.cells[(int) newX/dg.cell_size/10][(int) newY/dg.cell_size/10] == 0 || dg.cells[(int) newX/dg.cell_size/10][(int) newY/dg.cell_size/10] == dg.PERIMETER){
+			
+		}else{
+			x = newX;
+			y = newY;
+		}
+		
+		
 	}
 	
 	@Override
@@ -39,7 +51,7 @@ public class Player extends Entity{
 		sr.setTransformMatrix(batch.getTransformMatrix());
 		sr.begin(ShapeType.FilledCircle);
 		sr.setColor(0.1f, 0.1f, 0.1f, 1);
-		sr.filledCircle(x, y, 10);
+		sr.filledCircle(x, y, 5);
 		sr.end();
 	}
 }
