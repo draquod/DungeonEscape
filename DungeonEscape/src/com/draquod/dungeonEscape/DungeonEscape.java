@@ -14,7 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class DungeonEscape implements ApplicationListener {
 	private Stage stage;
+	private Player player;
 	private AssetManager manager = new AssetManager();
+	OrthographicCamera cam;
 	@Override
 	public void create() {		
 		float w = Gdx.graphics.getWidth();
@@ -34,7 +36,14 @@ public class DungeonEscape implements ApplicationListener {
         dg.CreateDungeon();
         System.out.println("Dungeon created :)");
         ddd.dg = dg;
-		
+        
+        player = new Player();
+        stage.addActor(player);
+        player.x = dg.begin.x*dg.cell_size*10 + dg.cell_size*10/2;
+        player.y = dg.begin.y*dg.cell_size*10 + dg.cell_size*10/2;
+        cam = new OrthographicCamera(100, 100);
+        cam.zoom = 0.4f;
+		stage.setCamera(cam);
 	}
 
 	@Override
@@ -46,9 +55,12 @@ public class DungeonEscape implements ApplicationListener {
 	public void render() {		
 		Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		 stage.act(Gdx.graphics.getDeltaTime());
-	     stage.draw();
+		
+		
+		cam.position.set(player.x,player.y,0);
+		stage.act(Gdx.graphics.getDeltaTime());
+		
+		stage.draw();
 	}
 
 	@Override
