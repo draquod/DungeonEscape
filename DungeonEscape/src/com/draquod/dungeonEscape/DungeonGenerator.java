@@ -83,6 +83,7 @@ public class DungeonGenerator {
 	}
 
 	public void CreateDungeon() {
+		
 		cells = new int[n_cols][n_rows];
 		for (int i = 0; i < n_cols; i++) {
 			for (int j = 0; j < n_rows; j++) {
@@ -92,13 +93,17 @@ public class DungeonGenerator {
 		PlaceRooms();
 		//CreateTunnels();
 		
-
+		System.out.println("ENTRACES PLACED");
 		Tunneling();
+		System.out.println("TUNNELS PLACED");
 		//Tunneling();
 		//Cleaning();
 		RemoveEntrances();
+		System.out.println("ENTRACES CLEANED");
 		PlaceStairs();
+		System.out.println("STAIRS PLACED");
 		FindCruces();
+		System.out.println("CRUCES FOUND");
 		
 	}
 	
@@ -418,7 +423,7 @@ public class DungeonGenerator {
 	private void PlaceRooms() {
 		int dungeonArea = n_rows * n_cols;
 		int roomArea = room_max * room_max;
-		numRooms = (int) ((float) dungeonArea / (float) roomArea*0.8);
+		numRooms = (int) ((float) dungeonArea / (float) roomArea*0.6);
 		System.out.println("NUM ROOMS: " + numRooms);
 		for (int i = 0; i < numRooms; i++) {
 			PlaceRoom();
@@ -578,10 +583,10 @@ public class DungeonGenerator {
 
 	private void SetupOps() {
 		seed = 0;
-		n_rows = 41;
-		n_cols = 41;
+		n_rows = 21;
+		n_cols = 21;
 		room_min = 3;
-		room_max = 9;
+		room_max = 8;
 		remove_deadends = 50;
 		add_stairs = 2;
 		cell_size = 8;

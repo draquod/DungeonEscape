@@ -10,7 +10,7 @@ public class Player extends Entity{
 
 	public float x;
 	public float y;
-	public float speed = 160.0f;
+	public float speed = 230.0f;
 	private ShapeRenderer sr;
 	
 	public Player(){

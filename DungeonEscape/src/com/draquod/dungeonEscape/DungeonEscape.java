@@ -17,6 +17,8 @@ public class DungeonEscape implements ApplicationListener {
 	private Player player;
 	private AssetManager manager = new AssetManager();
 	OrthographicCamera cam;
+	DungeonGenerator dg;
+	 Debug_DungeonDrawer ddd;
 	@Override
 	public void create() {		
 		float w = Gdx.graphics.getWidth();
@@ -28,11 +30,16 @@ public class DungeonEscape implements ApplicationListener {
         Gdx.input.setInputProcessor(stage);
         
         //World world = new World();
+        //Debug_DungeonDrawer2 ddd2 = new Debug_DungeonDrawer2();
+        //ddd2.w = world;
+        //stage.addActor(ddd2);
+        
+        
         //world.Debug_PrintWorld();
-        Debug_DungeonDrawer ddd = new Debug_DungeonDrawer();
+        ddd = new Debug_DungeonDrawer();
         stage.addActor(ddd);
         System.out.println("Begining dungeon creation");
-        DungeonGenerator dg = new DungeonGenerator();
+        dg = new DungeonGenerator();
         dg.CreateDungeon();
         System.out.println("Dungeon created :)");
         ddd.dg = dg;
@@ -42,8 +49,12 @@ public class DungeonEscape implements ApplicationListener {
         player.x = dg.begin.x*dg.cell_size*10 + dg.cell_size*10/2;
         player.y = dg.begin.y*dg.cell_size*10 + dg.cell_size*10/2;
         cam = new OrthographicCamera(100, 100);
-        cam.zoom = 0.4f;
+        //cam.zoom = 0.6f;
+        cam.zoom = 3.5f;
 		stage.setCamera(cam);
+		
+		//cam.position.set(dg.cell_size*10*dg.n_cols/2,dg.cell_size*10*dg.n_rows/2,0);
+		//cam.update();
 	}
 
 	@Override
@@ -56,8 +67,15 @@ public class DungeonEscape implements ApplicationListener {
 		Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		
-		cam.position.set(player.x,player.y,0);
+		if(dg.cells[(int) player.x/dg.cell_size/10][(int) player.y/dg.cell_size/10] == dg.STAIR_UP){
+			dg.CreateDungeon();
+			ddd.dg = dg;
+			player.x = dg.begin.x*dg.cell_size*10 + dg.cell_size*10/2;
+	        player.y = dg.begin.y*dg.cell_size*10 + dg.cell_size*10/2;
+			
+		}
+		cam.position.set(dg.cell_size*10*dg.n_cols/2,dg.cell_size*10*dg.n_rows/2,0);
+		//cam.position.set(player.x,player.y,0);
 		stage.act(Gdx.graphics.getDeltaTime());
 		
 		stage.draw();

@@ -2,11 +2,33 @@ package com.draquod.dungeonEscape;
 
 public class World {
 	private Room room;
+	public Room[][] rooms;
 	
 	public World(){
-		room = new Room();
-		String map = "0 1100001000000 100100000 0";
-		Generate(map.replace(" ", ""),room,0);
+		//room = new Room();
+		//String map = "0 1100001000000 100100000 0";
+		//Generate(map.replace(" ", ""),room,0);
+		rooms = new Room[5][5];
+		GenerateRooms();
+	}
+	
+	public void GenerateRooms(){
+		int x = (int) (Math.random()*4);
+		int y = (int) (Math.random()*4);
+		int x2 = (int) (Math.random()*4);
+		int y2 = (int) (Math.random()*4);
+		while(x == x2 && y ==y2){
+			x2 = (int) (Math.random()*4);
+			y2 = (int) (Math.random()*4);
+		}
+		
+		rooms[x][y] = new Room();
+		rooms[x][y].entrance = true;
+		rooms[x2][y2] = new Room();
+		rooms[x2][y2].exit = true;
+		
+		int cont = 0;
+		
 	}
 	
 	public int Generate(String s,Room room,int cont){

@@ -23,18 +23,18 @@ public class Debug_DungeonDrawer extends Actor{
     	for(int i=0;i<dg.n_cols;i++){
     		for(int j=0;j<dg.n_rows;j++){
 
-    			
+    			/*
     			if(dg.cells[i][j] == dg.CORRIDOR){
-    				sr.setColor(0.5f, 0.5f, 0.5f, 1);
+    				sr.setColor(0.4f, 0.4f, 0.4f, 1);
     				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
     			}else if((dg.cells[i][j] )== dg.ENTRANCE){
-    				sr.setColor(0.5f, 0.5f, 0.5f, 1);
+    				sr.setColor(0.4f, 0.4f, 0.4f, 1);
     				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
     			}else if((dg.cells[i][j] & (~dg.ROOM_ID) )== dg.ROOM){
     				sr.setColor(0.5f, 0.5f, 0.5f, 1);
     				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
     			}else if(dg.cells[i][j] == 99){
-    				sr.setColor(0.5f, 0.5f, 0.5f, 1);
+    				sr.setColor(0.4f, 0.4f, 0.4f, 1);
     				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
     			}else if(dg.cells[i][j] == dg.STAIR_DN){
     				sr.setColor(0.3f, 0.8f, 0.3f, 1);
@@ -43,9 +43,9 @@ public class Debug_DungeonDrawer extends Actor{
     				sr.setColor(0.8f, 0.3f, 0.3f, 1);
     				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
     			}
+    			*/
     			
     			
-    			/*
     			if(dg.cells[i][j] == dg.CORRIDOR){
     				sr.setColor(0.5f, 0.5f, 0.8f, 1);
     				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
@@ -68,7 +68,7 @@ public class Debug_DungeonDrawer extends Actor{
     				sr.setColor(0.8f, 0.3f, 0.3f, 1);
     				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
     			}
-    			*/
+    			
     			
     		}
     	}
