@@ -56,6 +56,10 @@ public class DungeonEscape implements ApplicationListener {
 		
 		if(Data.DEBUG)  cam.zoom = 3.5f;cam.position.set(dg.cell_size*10*dg.n_cols/2,dg.cell_size*10*dg.n_rows/2,0);
 		//cam.update();
+		
+		Joystick joystick = new Joystick();
+		joystick.player = player;
+		stage.addActor(joystick);
 	}
 
 	@Override
