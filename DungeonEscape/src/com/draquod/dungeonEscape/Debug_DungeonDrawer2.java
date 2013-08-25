@@ -18,7 +18,7 @@ public class Debug_DungeonDrawer2 extends Actor{
 		sr.setProjectionMatrix(batch.getProjectionMatrix());
 		sr.setTransformMatrix(batch.getTransformMatrix());
 		
-		sr.begin(ShapeType.FilledRectangle);
+		sr.begin(ShapeType.Filled);
     	
     	for(int i =0;i<5;i++){
     		for(int j= 0;j<5;j++){
@@ -30,7 +30,7 @@ public class Debug_DungeonDrawer2 extends Actor{
     				if(w.rooms[i][j].exit == true){
     					sr.setColor(0.8f, 0.5f, 0.5f, 1);
     				}
-    				sr.filledRect(i*scale, j*scale, scale,  scale);
+    				sr.rect(i*scale, j*scale, scale,  scale);
     			}
     		}
     	}

@@ -75,9 +75,9 @@ public class Player extends Entity{
 	public void draw (SpriteBatch batch, float parentAlpha) {
 		sr.setProjectionMatrix(batch.getProjectionMatrix());
 		sr.setTransformMatrix(batch.getTransformMatrix());
-		sr.begin(ShapeType.FilledCircle);
+		sr.begin(ShapeType.Filled);
 		sr.setColor(0.1f, 0.1f, 0.1f, 1);
-		sr.filledCircle(x, y, 5);
+		sr.circle(x, y, 5);
 		//sr.filledCircle(x-180, y-100, 5);
 		sr.end();
 	}

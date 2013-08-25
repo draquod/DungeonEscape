@@ -18,7 +18,7 @@ public class Debug_DungeonDrawer extends Actor{
 		sr.setProjectionMatrix(batch.getProjectionMatrix());
 		sr.setTransformMatrix(batch.getTransformMatrix());
 		
-		sr.begin(ShapeType.FilledRectangle);
+		sr.begin(ShapeType.Filled);
     	
     	for(int i=0;i<dg.n_cols;i++){
     		for(int j=0;j<dg.n_rows;j++){
@@ -26,22 +26,22 @@ public class Debug_DungeonDrawer extends Actor{
     			if(!Data.DEBUG){
 	    			if(dg.cells[i][j] == dg.CORRIDOR){
 	    				sr.setColor(0.4f, 0.4f, 0.4f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}else if((dg.cells[i][j] )== dg.ENTRANCE){
 	    				sr.setColor(0.4f, 0.4f, 0.4f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}else if((dg.cells[i][j] & (~dg.ROOM_ID) )== dg.ROOM){
-	    				sr.setColor(0.5f, 0.5f, 0.5f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.setColor(0.4f, 0.4f, 0.4f, 1);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}else if(dg.cells[i][j] == 99){
 	    				sr.setColor(0.4f, 0.4f, 0.4f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}else if(dg.cells[i][j] == dg.STAIR_DN){
 	    				sr.setColor(0.3f, 0.8f, 0.3f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}else if(dg.cells[i][j] == dg.STAIR_UP){
 	    				sr.setColor(0.8f, 0.3f, 0.3f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}
     			}else{
     			
@@ -49,25 +49,25 @@ public class Debug_DungeonDrawer extends Actor{
 	    			
 	    			if(dg.cells[i][j] == dg.CORRIDOR){
 	    				sr.setColor(0.5f, 0.5f, 0.8f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}else if((dg.cells[i][j] )== dg.ENTRANCE){
 	    				sr.setColor(0.8f, 0.8f, 0.5f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}else if((dg.cells[i][j] & (~dg.ROOM_ID) )== dg.ROOM){
 	    				sr.setColor(0.5f, 0.8f, 0.5f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}else if((dg.cells[i][j] )== dg.PERIMETER){
 	    				sr.setColor(0.8f, 0.5f, 0.5f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}else if(dg.cells[i][j] == 99){
 	    				sr.setColor(0.8f, 0.5f, 0.8f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}else if(dg.cells[i][j] == dg.STAIR_DN){
 	    				sr.setColor(0.3f, 0.8f, 0.3f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}else if(dg.cells[i][j] == dg.STAIR_UP){
 	    				sr.setColor(0.8f, 0.3f, 0.3f, 1);
-	    				sr.filledRect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
+	    				sr.rect(i*dg.cell_size*scale, j*dg.cell_size*scale, dg.cell_size*scale,  dg.cell_size*scale);
 	    			}
     			}
     			

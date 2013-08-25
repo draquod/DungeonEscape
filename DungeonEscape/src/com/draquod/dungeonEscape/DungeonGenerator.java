@@ -593,7 +593,7 @@ public class DungeonGenerator {
 		room_max = 8;
 		remove_deadends = 50;
 		add_stairs = 2;
-		cell_size = 8;
+		cell_size = 6;
 	}
 
 }
