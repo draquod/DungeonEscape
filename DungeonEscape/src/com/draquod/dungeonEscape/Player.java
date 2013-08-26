@@ -83,7 +83,7 @@ public class Player extends Entity {
 		sr.setTransformMatrix(batch.getTransformMatrix());
 		sr.begin(ShapeType.Filled);
 		sr.setColor(0.1f, 0.1f, 0.1f, 1);
-		if (Gdx.app.getType() == ApplicationType.Android) {
+		if (!Data.MODE3D) {
 			sr.circle(x, y, 5);
 		}
 		sr.end();

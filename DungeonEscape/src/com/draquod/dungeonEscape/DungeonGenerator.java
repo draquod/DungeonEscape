@@ -2,6 +2,8 @@ package com.draquod.dungeonEscape;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -341,7 +343,13 @@ public class DungeonGenerator {
 		}
 		*/
 		
-		cells2 = cells.clone();
+		//cells2 = cells.clone();
+		cells2 = new int[cells.length][cells[0].length];
+		for(int i =0;i<cells.length;i++){
+			for(int j =0;j<cells[0].length;j++){
+				cells2[i][j] = cells[i][j];
+			}
+		}
 		
 		for(int i=0;i<(int)(n_cols/2);i++){
 			for(int j =0;j<(int)(n_rows)/2;j++){
@@ -532,13 +540,29 @@ public class DungeonGenerator {
 		
 	}
 	
+	
+	private <T> void swap(List<T> list, int idx1, int idx2) {
+        T o1 = list.get(idx1);
+        list.set(idx1, list.get(idx2));
+        list.set(idx2, o1);
+}
+	
+	public <T> void shuffle(List<T> objects) {
+		Random r = new Random();
+        for(int i = objects.size(); i > 1; i--) {
+                swap(objects, i - 1, r.nextInt(i));
+        }
+	
+	}
+	
+	
 	void CreateTunnel(int x, int y,int lastDir){
 		if(((cells[x][y] & (~ROOM_ID)) != ROOM) 
 				&&  (cells[x][y] != PERIMETER) 
 				&& (cells[x][y] != CORRIDOR)){
 			cells[x][y] = CORRIDOR;
-			Collections.shuffle(dirs);
-			
+			//Collections.shuffle(dirs);
+			shuffle(dirs);
 			for(int i =0;i<4;i++){
 				int dx = 0;
 				int dy = 0;
