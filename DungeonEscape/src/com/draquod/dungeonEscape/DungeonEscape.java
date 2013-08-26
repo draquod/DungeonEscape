@@ -2,6 +2,7 @@ package com.draquod.dungeonEscape;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.graphics.GL10;
@@ -53,7 +54,9 @@ public class DungeonEscape implements ApplicationListener {
         
         //world.Debug_PrintWorld();
         ddd = new Debug_DungeonDrawer();
-        stage.addActor(ddd);
+        if(Gdx.app.getType() == ApplicationType.Android){
+        	stage.addActor(ddd);
+        }
         System.out.println("Begining dungeon creation");
         dg = new DungeonGenerator();
         dg.CreateDungeon();
@@ -77,27 +80,12 @@ public class DungeonEscape implements ApplicationListener {
 		joystick.player = player;
 		stage.addActor(joystick);
 		
-//		mb = new ModelBatch();
-//		lights = new Lights();
-//		lights.ambientLight.set(0.4f, 0.4f, 0.4f, 1f);
-//        lights.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
-//         
-//        camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        camera.position.set(3f, 3f, 3f);
-//        camera.lookAt(0,0,0);
-//        camera.near = 0.001f;
-//        camera.far = 300f;
-//        camera.update();
-// 
-//        ModelLoader loader = new ObjLoader();
-//        model = loader.loadModel(Gdx.files.internal("data/monkey.obj"));
-//        instance = new ModelInstance(model);
-//        camController = new CameraInputController(camera);
-//        Gdx.input.setInputProcessor(camController);
-//        
-		dungeonDrawer = new DungeonDrawer();
-		dungeonDrawer.dg = dg;
-		dungeonDrawer.player = player;
+		if(Gdx.app.getType() == ApplicationType.Desktop || Gdx.app.getType() == ApplicationType.WebGL){
+			dungeonDrawer = new DungeonDrawer();
+			dungeonDrawer.dg = dg;
+			dungeonDrawer.player = player;
+			joystick.cam = dungeonDrawer.camera;
+		}
 		
 	}
 
@@ -115,9 +103,36 @@ public class DungeonEscape implements ApplicationListener {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-        dungeonDrawer.act(Gdx.graphics.getDeltaTime());
-		dungeonDrawer.draw();
+        
+        if(Gdx.app.getType() == ApplicationType.Android){
+	        if(Data.DEBUG) cam.position.set(dg.cell_size*10*dg.n_cols/2,dg.cell_size*10*dg.n_rows/2,0);
+			if(!Data.DEBUG) cam.position.set(player.x,player.y,0);
+        }
+        
+        if(Gdx.app.getType() == ApplicationType.Desktop || Gdx.app.getType() == ApplicationType.WebGL){
+        	
+	        dungeonDrawer.act(Gdx.graphics.getDeltaTime());
+			dungeonDrawer.draw();
+        }
+        
+	    cam.position.set(player.x,player.y,0);
 		stage.act(Gdx.graphics.getDeltaTime());
+		stage.draw();
+		
+		
+		
+		if(dg.cells[(int) player.x/dg.cell_size/10][(int) player.y/dg.cell_size/10] == dg.STAIR_UP){
+			dg.CreateDungeon();
+			ddd.dg = dg;
+			if(Gdx.app.getType() == ApplicationType.Desktop || Gdx.app.getType() == ApplicationType.WebGL){
+				dungeonDrawer.doneLoading();
+			}
+			player.x = dg.begin.x*dg.cell_size*10 + dg.cell_size*10/2;
+	        player.y = dg.begin.y*dg.cell_size*10 + dg.cell_size*10/2;
+			
+		}
+		
+		
 		/*
 		
 		if(dg.cells[(int) player.x/dg.cell_size/10][(int) player.y/dg.cell_size/10] == dg.STAIR_UP){
@@ -132,12 +147,7 @@ public class DungeonEscape implements ApplicationListener {
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		*/
-		/*
-		
-		mb.begin(camera);
-            mb.render(instance, lights);
-        mb.end();
-        */
+
 	}
 
 	@Override

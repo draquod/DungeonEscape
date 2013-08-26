@@ -1,5 +1,6 @@
 package com.draquod.dungeonEscape;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -11,7 +12,7 @@ public class Joystick extends Entity{
 	
 	
 	private ShapeRenderer sr;
-	
+	public Camera cam;
 	
 	public Player player;
 
@@ -46,6 +47,7 @@ public class Joystick extends Entity{
 	@Override
 	public void act(float dt){
 		this.setBounds(player.x-150-50, player.y-70-50, getWidth(), getHeight());
+		//this.setBounds(player.x-240-50, player.y-180-50, getWidth(), getHeight());
 	}
 
 	@Override
@@ -53,10 +55,14 @@ public class Joystick extends Entity{
 		sr.setProjectionMatrix(batch.getProjectionMatrix());
 		sr.setTransformMatrix(batch.getTransformMatrix());
 		
+		//sr.setProjectionMatrix(cam.projection);
+		//sr.setTransformMatrix(cam.view);
+		
 		sr.begin(ShapeType.Line);
 		sr.setColor(0.6f, 0.6f, 0.8f, 0.2f);
 		//sr.circle(x, y, 25);
 		sr.circle(player.x-150, player.y-70, 30);
+		//sr.circle(240, 180, 30);
 		sr.end();
 	}
 
