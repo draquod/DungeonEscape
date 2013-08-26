@@ -23,6 +23,7 @@ public class Debug_DungeonDrawer extends Actor{
     	for(int i=0;i<dg.n_cols;i++){
     		for(int j=0;j<dg.n_rows;j++){
 
+
     			if(!Data.DEBUG){
 	    			if(dg.cells[i][j] == dg.CORRIDOR){
 	    				sr.setColor(0.4f, 0.4f, 0.4f, 1);

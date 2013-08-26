@@ -63,6 +63,8 @@ public class DungeonGenerator {
 	
 	Node world;
 	
+	boolean done = false;
+	
 	public Vector2 begin;
 	public Vector2 end;
 	public DungeonGenerator() {
@@ -85,31 +87,35 @@ public class DungeonGenerator {
 	}
 
 	public void CreateDungeon() {
-		xs.clear();
-		ys.clear();
-		xe.clear();
-		ye.clear();
-		room_id = 1;
-		cells = new int[n_cols][n_rows];
-		for (int i = 0; i < n_cols; i++) {
-			for (int j = 0; j < n_rows; j++) {
-				cells[i][j] = NOTHING;
-			}
-		}
-		PlaceRooms();
-		//CreateTunnels();
+		done = false;
 		
-		System.out.println("ENTRACES PLACED");
-		Tunneling();
-		System.out.println("TUNNELS PLACED");
-		//Tunneling();
-		//Cleaning();
-		RemoveEntrances();
-		System.out.println("ENTRACES CLEANED");
-		PlaceStairs();
-		System.out.println("STAIRS PLACED");
-		FindCruces();
-		System.out.println("CRUCES FOUND");
+		while(!done){
+			xs.clear();
+			ys.clear();
+			xe.clear();
+			ye.clear();
+			room_id = 1;
+			cells = new int[n_cols][n_rows];
+			for (int i = 0; i < n_cols; i++) {
+				for (int j = 0; j < n_rows; j++) {
+					cells[i][j] = NOTHING;
+				}
+			}
+			PlaceRooms();
+			//CreateTunnels();
+			
+			System.out.println("ENTRACES PLACED");
+			Tunneling();
+			System.out.println("TUNNELS PLACED");
+			//Tunneling();
+			//Cleaning();
+			RemoveEntrances();
+			System.out.println("ENTRACES CLEANED");
+			PlaceStairs();
+			System.out.println("STAIRS PLACED");
+			//FindCruces();
+			System.out.println("CRUCES FOUND");	
+		}
 		
 	}
 	
@@ -152,7 +158,6 @@ public class DungeonGenerator {
 				int cj = (j*2)+1;
 				
 				if(((cells[ci][cj] & (~ROOM_ID)) != ROOM) 
-						&&  (cells[ci][cj] != PERIMETER) 
 						&& (cells[ci][cj] != CORRIDOR)){
 					if(ci > 2 && cj > 2 && ci < n_cols-2 && cj < n_rows -2){
 						if(cells[ci+2][cj] == CORRIDOR ||
@@ -170,6 +175,11 @@ public class DungeonGenerator {
 			}
 		}
 		
+		System.out.println("NUM STAIRS: " + xs.size());
+		
+		if(xs.size() < 2){
+			return;
+		}
 		int index;
 		
 		//Stair down
@@ -177,6 +187,8 @@ public class DungeonGenerator {
 		cells[xs.get(index)][ys.get(index)] = STAIR_DN;
 		int ci = xs.get(index);
 		int cj = ys.get(index);
+		xs.remove(index);
+		ys.remove(index);
 		begin.x = ci;
 		begin.y = cj;
 		if(cells[ci+2][cj] == CORRIDOR){
@@ -191,6 +203,11 @@ public class DungeonGenerator {
 		else if(cells[ci][cj-2] == CORRIDOR ){
 			cells[ci][cj-1] = CORRIDOR;
 		}
+		
+		
+		PurgeRemainings();
+		
+		
 		
 		//Stair up
 		index = (int) (Math.random()*(xs.size()-1));
@@ -211,8 +228,100 @@ public class DungeonGenerator {
 		else if(cells[ci][cj-2] == CORRIDOR ){
 			cells[ci][cj-1] = CORRIDOR;
 		}
+		done = true;
 	}
 	
+	
+	private void Purge(int x, int y){
+		cells2[x][y] = 777;
+		if(cells2[x+1][y] != 777){
+			if(cells[x+1][y] == CORRIDOR || (cells[x+1][y] & (~ROOM_ID)) == ROOM || cells[x+1][y] == ENTRANCE){
+				Purge(x+1,y);
+			}
+		}
+		if(cells2[x-1][y] != 777){
+			if(cells[x-1][y] == CORRIDOR || (cells[x-1][y] & (~ROOM_ID)) == ROOM || cells[x-1][y] == ENTRANCE){
+				Purge(x-1,y);
+			}
+		}
+		if(cells2[x][y+1] != 777){
+			if(cells[x][y+1] == CORRIDOR || (cells[x][y+1] & (~ROOM_ID)) == ROOM || cells[x][y+1] == ENTRANCE){
+				Purge(x,y+1);
+			}
+		}
+		if(cells2[x][y-1] != 777){
+			if(cells[x][y-1] == CORRIDOR || (cells[x][y-1] & (~ROOM_ID)) == ROOM || cells[x][y-1] == ENTRANCE){
+				Purge(x,y-1);
+			}
+		}
+		
+	}
+	private void FirstTier(){
+		for(int i =0;i<n_cols;i++){
+			for(int k =0;k<n_rows;k++){
+				if(cells2[i][k] != 777){
+					if(cells[i][k] != PERIMETER){
+						cells[i][k] = 0;
+					}
+				}
+			}
+		}
+	}
+	private void SecondTier(){
+		cells2 = new int[cells.length][cells[0].length];
+		for(int i =0;i<cells.length;i++){
+			for(int j =0;j<cells[0].length;j++){
+				cells2[i][j] = cells[i][j];
+			}
+		}
+		int cont = 0;
+		for(int i =0;i<n_cols;i++){
+			for(int j =0;j<n_rows;j++){
+				cont = 0;
+				if(cells2[i][j] == PERIMETER){
+
+					if(i<n_cols-1){
+						if( (cells2[i+1][j] & (~ROOM_ID)) == ROOM ){
+							cont++;
+						}
+					}
+					if(i > 0){
+						if( (cells2[i-1][j] & (~ROOM_ID)) == ROOM ){
+							cont++;
+						}
+					}
+					if(j<n_rows -1){
+						if( (cells2[i][j+1] & (~ROOM_ID)) == ROOM){
+							cont++; 
+						}
+					}
+					if(j > 0){
+						if( (cells2[i][j-1] & (~ROOM_ID)) == ROOM){
+							cont++;
+						}
+					}
+					if(cont <1){
+						cells[i][j] = 0;
+					}
+				}
+			}
+		}
+	}
+	private void PurgeRemainings(){
+		//cells2 = cells.clone();
+		cells2 = new int[cells.length][cells[0].length];
+		for(int i =0;i<cells.length;i++){
+			for(int j =0;j<cells[0].length;j++){
+				cells2[i][j] = 0;
+			}
+		}
+		Purge((int)begin.x,(int)begin.y);
+		
+		FirstTier();
+		SecondTier();
+		
+		
+	}
 	private void RemoveEntrances(){
 		for(int i =0;i<xe.size();i++){
 			
@@ -344,6 +453,7 @@ public class DungeonGenerator {
 		*/
 		
 		//cells2 = cells.clone();
+		
 		cells2 = new int[cells.length][cells[0].length];
 		for(int i =0;i<cells.length;i++){
 			for(int j =0;j<cells[0].length;j++){

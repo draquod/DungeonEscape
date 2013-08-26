@@ -44,7 +44,7 @@ public class DungeonEscape implements ApplicationListener {
 			Data.MODE3D = true;
 		}
 		
-		Data.MODE3D =  true;
+		Data.MODE3D =  false;
 
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
@@ -76,7 +76,8 @@ public class DungeonEscape implements ApplicationListener {
 		player.y = dg.begin.y * dg.cell_size * 10 + dg.cell_size * 10 / 2;
 		cam = new OrthographicCamera(100, 100);
 		if (!Data.DEBUG)
-			cam.zoom = 0.6f;
+			//cam.zoom = 0.6f;
+			cam.zoom = 1.5f;
 		if (Data.DEBUG)
 			cam.zoom = 3.5f;
 		stage.setCamera(cam);
